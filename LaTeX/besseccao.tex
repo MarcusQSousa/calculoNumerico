@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\begin{document}
+\section{Metodo da bisseccao}
+
+	O metodo da bisseccao para encontrar raizes de funcoes, funciona dividindo pela metade o intervalo contendo a raiz ate que o intervalo seja tao pequeno que qualquer valor de $x$ pertencente a esse intervalo seja uma boa aproximacao da raiz verdadeira de acordo com a precisao escolhida.
+
+    Comecamos com um intervalo inicial $[a,b]$, definimos um valor de $c$ no meio do intervalo$$c = \frac{a+b}{2}$$. Se $f(c)\times f(a)$ for negativo, sabemos que o zero esta entre $a$ e $c$ e entao trocamos b por $c$. Se o produto nao for negativo, sabemos que a raiz esta no intervalo $[c,b]$ e entao trocamos $a$ por $c$.Repetimos esses passos ate que alguma condicao de parada seja alcancada.
+    
+    O produto $f(a)\times f(b)$ ser negativo indica uma raiz no intervalo porque para que esse produto seja negativo um fator deve ser positivo e o outro negativo.
+
+
+    
+    
+\begin{lstlisting}[language=Python, caption=Exemplo em python]
+    def bissec(inf, sup, precisao, fun): 
+    a = inf #definimos o limite inferior do intervalo inicial
+    b = sup #limite superior
+    x = 0   
+    funcao = fun # f(x)
+
+    while((b-a) < precisao): # testamos se o intervalo e suficienttemente pequeno
+        x = (a+b)/2 # definimos um x no meio do intervalo
+        y = funcao(x)
+
+        if(y*funcao(a) < 0): # se f(x)*f(a) for negativo:
+            b = x            #  trocamos b por x fazendo o intervalo [a,x]
+        else:                # caso contrario: 
+            a = x            #  trocamos a por x fazendo o intervalo [x,b]
+
+        if(abs(y) < precisao): #testamos se f(x) esta proximo suficiente de 0
+            break
+    
+    return x 
+\end{lstlisting}
+
+    Desde que o algoritmo base seja mantido, podemos mudar o codigo. Podemos a cada passo imprimir o valor de x, o intervalo, o numero de passos, definir uma condicao de parada depois de n passos, etc.
+
+\begin{lstlisting}[language=C++, caption=Exemplo em C++]
+typedef long double ddouble;
+
+ddouble bissec(ddouble inf, ddouble sup, ddouble precisao, ddouble (*funcao)(ddouble){
+    ddouble a = inf;
+    ddouble b = sup;
+    ddouble x;
+    while(true){
+        x = (a+b)/2;
+        ddouble y = funcao(x);
+        if((b-a)/2 < precisao){
+            break;
+        }if(abs(y) < precisao){
+            break;
+        }if
+
+        if(funcao(a)*y < 0){
+            b = x;
+        }else{
+            a = x;
+        }
+
+    };
+
+    return(x);
+};
+\end{lstlisting}
+
+Ainda que o codigo mude em diferentes linguagens, o algoritmo continua o mesmo.
+
+\end{document}

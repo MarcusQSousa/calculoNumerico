@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\section{Soma dos algorismos de um numero}
+
+Comecamos salvando o numero em uma variavel \textit{n}. Criamos tambem a variavel \textit{soma} e uma variavel para iteracao \textit{i} que vai iniciar com o mesmo valor de \textit{n}.
+
+    \begin{lstlisting}[language=Python]
+    n = int(input("Digite um numero"))
+    soma = 0
+    i = n\end{lstlisting}
+
+Agora vamos usar um laco while para iterar sobre cada digito de \textit{n}.
+
+\begin{lstlisting}[language=Python]
+     while(i != 0):
+        aux = int(i/10)
+        digito = i - (aux*10)
+        soma += digito
+        i = aux\end{lstlisting}
+
+A cada iteracao, dividimos o valor de \textit{i} por 10 ignorando a parte decimal(usando \textit{int()}) e salvamos esse valor na variavel auxiliar \textit{aux}, obtemos o ultimo digito de nosso numero da subtracao $i - 10\textit{aux}$, dai entao somamos o valor do digito ao valor de \textit{soma}, e depois salvamos o valor de \textit{aux} em \textit{i} para a proxima iteracap.
+
+\end{document}
+

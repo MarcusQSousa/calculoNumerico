@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\section{Ler 3 numeros, imprimir em ordem e a soma dos dois menores}
+
+Primeiro comecamos lendo os numeros do usuario e salvando cada um em uma variavel
+
+    \begin{lstlisting}[language=Python]
+    n1 = int(input("Digite o primeiro numero")
+    n2 = int(input("Digite o segundo numero")
+    n2 = int(input("Digite o terceiro numero")\end{lstlisting}
+
+(A funcao \textit{int()} transforma o valor entre parenteses em um numero. Isso e necessario pois a funcao \textit{input()} retorna um valor de tipo texto(string)).
+
+Agora vamos criar mais tres variaveis para armazenar os valores ordenados.
+
+\begin{lstlisting}[language=Python]
+    maior = 0   #Iniciamos com 0 pois em python
+    meio = 0    #nao podemos iniciar variaveis sem valor
+    menor = 0\end{lstlisting}
+
+
+Agora finalmente vamos ordenar os numeros. Precisaremos de tres conjuntos de \textit{if/else}, uma para caso o maior for n1, uma pro n2 e outr pro n3. Cada um dessas estruturas contendo mais duas, para ordenar os dois numeros restantes
+
+
+\begin{lstlisting}[language=Python]
+    if(n1 > n2 and n1 > n3):
+        maior = n1
+        if(n2 > n3):
+            meio = n2
+            menor = n3
+        else:
+            meio = n3
+            menor = n2
+    if(n2 > n1 and n2 > n3):
+        maior = n2
+        if(n1 > n3):
+            meio = n1
+            menor = n3
+        else:
+            meio = n3
+            menor = n1
+    if(n3 > n1 and n3 > n2):
+        maior = n3
+        if(n1 > n2):
+            meio = n1
+            menor = n2
+        else:
+            meio = n2
+            menor = n1\end{lstlisting}
+
+Note que poderiamos ordenar diretemente nas variaveis iniciais, utilizando apenas mais uma variavel auxiliar, ou ate mesmo imprimir os os resultados diretamente. Porem, vamos fazer dessa forma para facilitar o entendimento.
+
+Pronto. agora e apenas somar e imprimir 
+
+\begin{lstlisting}[language=Python]
+    print(f"Ordem decrescente: {maior}, {meio}, {menor}\n")
+    print(f"A soma dos menores e: {menor} + {meio} = {menor+meio}\n")\end{lstlisting}
+
+\end{document}
+

@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\section{Estrutura de repeticao}
+
+Para que o nossos algoritmos fiquem mais faceis de testar. Para que nao tenhamos que executar o arquivo repetidas vezes, vamos criar uma estrutura para repetir nossos algoritmos ate que desejamos parar.
+
+Para isso vamos criar uma variavel para indicar se o usuario deseja parar
+
+    \begin{lstlisting}[language=Python]
+    deveParar = ""\end{lstlisting}
+
+Agora criamos um laco while para repetir nosso algoritmo.
+
+\begin{lstlisting}[language=Python]
+    while(deveParar == ""):
+        #Algoritmo a ser executado.
+        
+        deveParar = input("deseja continuar?(enter para continuar, qualquer tecla para parar)\n")
+        
+    print("Ate mais!")\end{lstlisting}
+
+Observe que quando o usuario apenas teclar enter, a funcao \textit{input()} vai retornar um texto vazio ````, assim nosso algoritmo sera repetido, mas quando qualquer outra tecla for pressionada, a expressao \textit{[(deveRepetir == ````) False]}, dessa forma sairemos do laco de repeticao e o programa ira continuar, ou no nosso caso parar, pois nao tem mais nada depois do laco de repeticao
+
+\end{document}
+

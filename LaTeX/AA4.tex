@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\section{Resto da divisao inteira}
+
+Primeiro lemos os valores dos dois numeros(numerador e denominador)
+
+
+    \begin{lstlisting}[language=Python]
+    a = int(input("Digite o numero a ser dividido")
+    b = int(input("Digite o divisor")\end{lstlisting}
+
+Agora podemos usar a funcao \textit{int()} para cortar a parte decimal da divisao $\frac{a}{b}$, assim ficamos apenas com a parte inteira da divisao $c$, dessa forma, o resto da divisao $\frac{a}{b}$ vale $a - bc$
+
+\begin{lstlisting}[language=Python]
+    c = int(a/b)
+    resto = a - b*c
+    print(f"O resto da divisao de {a} por {b} = {resto}\n")\end{lstlisting}
+
+
+Pronto.
+
+\subsection{Outro metodo}
+
+Nesse segundo metodo vamos iniciar lendo os valores do numerador e denominador, assim como no primeiro. Em seguida, vamos criar um loop e uma variavel \textit{c} iniciada em 0 que vai corresponder a parte inteira da divisao assim como no metodo anterior.
+
+\begin{lstlisting}[language=Python]
+    c = 0
+    while(b * (c+1) <= a):
+        c +=1
+
+    resto = a - c*b
+    print(f"O resto da divisao de {a} por {b} = {resto}\n")
+    
+    \end{lstlisting}
+No loop identificamos o maior inteiro que multiplicado por b e menor ou igual a a, dai entao resto $= a - bc$.
+
+
+
+\end{document}
+

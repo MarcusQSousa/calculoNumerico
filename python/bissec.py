@@ -35,28 +35,25 @@ def isolamento(limInf, limSup, fun):
     
     return intervalos
 
-def bissec(inf, sup, precisao, fun):
-    a = inf
-    b = sup
-    x = 0
-    funcao = fun
+def bissec(inf, sup, precisao, fun): 
+    a = inf #definimos o limite inferior do intervalo inicial
+    b = sup #limite superior
+    x = 0   
+    funcao = fun # f(x)
 
-    while(True):
-        x = (a+b)/2
+    while((b-a)/2 < precisao): # testamos se o intervalo e suficienttemente pequeno
+        x = (a+b)/2 # definimos um x no meio do intervalo
         y = funcao(x)
 
-        if(y*funcao(a) > 0):
-            a = x
-        else:
-            b = x
+        if(y*funcao(a) < 0): # se f(x)*f(a) for negativo:
+            b = x            #  trocamos b por x fazendo o intervalo [a,x]
+        else:                # caso contrario: 
+            a = x            #  trocamos a por x fazendo o intervalo [x,b]
 
-        if((b-a) < precisao):
-            x = (a+b)/2
-            break
-        elif(abs(y) < precisao):
+        if(abs(y) < precisao): #testamos se f(x) e proximo suficiente de 0
             break
     
-    return x
+    return x 
 
 intervalos = isolamento(0, 3,funcaoTrig)#[0,3]-funcao trig/[-3.5,2.0] - funcaoPoli
 
