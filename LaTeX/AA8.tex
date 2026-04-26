@@ -1,0 +1,190 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1.5cm]{geometry}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\begin{document}
+
+\section{AA8}
+Escreva um programa, em linguagem Python, para as seguintes tarefas:
+\begin{enumerate}
+    \item ler a dimensão n de uma matriz no console;
+    \item registrar as entradas da matriz no console;
+    \item imprimir a matriz original;
+    \item imprimir a matriz na forma transposta;
+    \item imprimir a matriz resultante da soma da matriz original com sua transposta;
+    \item imprimir a matriz resultante do produto da matriz original com sua transposta;
+    \item imprimir o valor do determinante da matriz original - aqui pode usar uma função pré-compilada;
+    
+\end{enumerate}
+\subsection{}
+
+Iniciamos o programa solicitando a ordem(dimensao) da nossa matriz ao usuario. Os elementos entao sao inseridos manualmente. 
+\begin{lstlisting}[language=python]
+ordem = int(input("Digite a dimensao da matriz A\n"))
+matriz = []
+for u in range(ordem):
+    linha = []
+    for v in range(ordem):
+        linha.append(int(input(f"Digte o valor de A{u+1}{v+1}\n")))
+    matriz.append(linha)
+print("Matriz inicial A:")
+printmatriz(matriz)
+\end{lstlisting}
+A matriz em nosso codigo e representada por uma lista de listas, onde cada lista interna representa uma linha da matriz.
+Para imprimir nossa matriz no terminal definimos a funcao printmatriz() no inicio do nosso codigo, fazemos isso para poder reusar esse codigo.
+\begin{lstlisting}[language=python]
+def printmatriz(matriz):
+    for linha in matriz:
+        print(linha)
+\end{lstlisting}
+
+\subsection{Matriz transposta}
+Para gerar nossa matriz transposta, fazemos as linhas se tornarem colunas
+\begin{lstlisting}[language=Python]
+transposta = []
+for u in range(ordem):
+    linha = []
+    for v in range(ordem):
+        linha.append(matriz[v][u])
+    transposta.append(linha)
+print("AT: Transposta de A:")
+printmatriz(transposta)
+\end{lstlisting}
+Para cada elemento fazemos:
+$A^T_{[v,u]} = A_{[u,v]}$
+
+\subsection{Soma de matrizes}
+Para somar duas matrizes apenas somamos os elementos de mesma posicao. $(A+B)_{[u,v]}=A_{[u,v]}+ B_{[u,v]}$
+
+\begin{lstlisting}[language=Python]
+soma = []
+for u in range(ordem):
+    linha = []
+    for v in range(ordem):
+        linha.append(matriz[u][v] + transposta[u][v])
+    soma.append(linha)
+print("Soma de A com AT")
+printmatriz(soma)
+\end{lstlisting}
+
+\subsection{Produto de matrizes}
+Para multiplicacao, cada elemento da matriz produto e o somatorio do produto de cada elemento da linha pela coluna correspondente.$P = AB$
+
+\[
+P_{[u,v]}= \sum_i A_{[u,i]} \cdot B_{[i,v]}
+\]
+
+\begin{lstlisting}[language=Python]
+produto = []
+for u in range(ordem):
+    linha = []
+    for v in range(ordem):
+        elemento = 0
+        for passo in range(ordem):
+            elemento += matriz[u][passo] * transposta[passo][v]
+        linha.append(elemento)
+    produto.append(linha)
+print("Produto de A com AT:")
+printmatriz(produto)
+\end{lstlisting}
+
+\subsection{Determinantes}
+Aqui simplesmentes usamos a biblioteca numpy.
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+#[...
+#...]
+determinante = np.linalg.det(matriz)
+print(f"Determinante:{determinante}")
+\end{lstlisting}
+
+\subsection{Codigo completo:}
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+print("AA-08-Marcus Sousa\n\n")
+deveParar = ""
+
+def printmatriz(matriz):
+    for linha in matriz:
+        print(linha)
+
+while (deveParar == ""):
+    ordem = int(input("Digite a dimensao da matriz A\n"))
+    matriz = []
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            linha.append(int(input(f"Digite o valor na posisao {u+1},{v+1} \n")))
+        matriz.append(linha)
+    print("Matriz inicial A:")
+    printmatriz(matriz)
+
+    transposta = []
+
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            linha.append(matriz[v][u])
+        transposta.append(linha)
+    print("AT: Transposta de A:")
+    printmatriz(transposta)
+
+    soma = []
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            linha.append(matriz[u][v] + transposta[u][v])
+        soma.append(linha)
+    print("Soma de A com AT")
+    printmatriz(soma)
+
+    produto = []
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            elemento = 0
+            for passo in range(ordem):
+                elemento += matriz[u][passo] * transposta[passo][v]
+            linha.append(elemento)
+        produto.append(linha)
+    print("Produto de A com AT:")
+    printmatriz(produto)
+
+    determinante = np.linalg.det(matriz)
+    print(f"Determinante:{determinante}")
+
+    deveParar = input("Deseja continuar?(enter para continuar, qualquer tecla para parar)\n")
+
+print("Ate mais")
+\end{lstlisting}
+
+\end{document}

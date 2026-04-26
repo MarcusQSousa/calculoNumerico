@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1.5cm]{geometry}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\begin{document}
+
+\section{AA10}
+Escreva um programa, em linguagem Python, para resolver um sistema de equações lineares triangular inferior a partir das seguintes etapas:
+\begin{enumerate}
+    \item ler a dimensão n da matriz dos coeficientes no console;
+    \item registrar as entadas da matriz dos coeficientes no console;
+    \item registrar as entradas do vetor dos resultados no console;
+    \item imprimir o sistema original na forma de matriz ampliada;
+    \item resolver e imprimir a solução do sistema de equações;
+\end{enumerate}
+
+\subsection{Solucao para sistema triangular superior}
+O codigo para esse exercicio e praticamente igual ao do exercicio passado. Porem como no exercicio passado tivemos que trabalhar de traz pra frente, o codigo ficou mais dificil de entender. Dessa forma vamos explicar melhor aqui onde e mais facil de entender e dessa forma as alteracoes feitas no exercicio passado ficarao claras.
+
+Por ser um sistema triangular superior. Obtemos o valor do primeiro elemento $x_1$ do vetor de incognitas $x$ simplesmente com 
+\[
+x_1 = \frac{b_1}{A_{[1,1]}}
+\]
+Tendo o valor de $x_1$, o utilizamos para encontrar $x_2$, usamos $x_1$ e $x_2$ para encontrar $x_3$ e continuamos assim ate finalizar o sistema usando:
+\[
+x_n =\frac{1}{A_{[n,n]}}[ b_n -\sum_{i=1}^{n} A_{[n,i]} \cdot x_i]
+\]
+\begin{lstlisting}[language=Python]
+incognitas = [0]*ordem
+incognitas[0] = vetorResultado[0]/matriz[0][0]
+for n in range(1,ordem):
+    somatorio = 0
+    for i in range(n):
+        somatorio += matriz[n][i] * incognitas[i]
+    incognitas[n] = (vetorResultado[n]-somatorio)/matriz[n][n]
+print(f"Solucao:{incognitas}")
+\end{lstlisting}
+Observe que temos que adaptar nossos indices devido a linguagem python utilizar 0 como primeiro elemento.
+\subsection{Codigo completo:}
+\begin{lstlisting}[language=Python]
+deveParar = ""
+
+def printmatriz(matriz):
+    for linha in matriz:
+        print(linha)
+
+def printAmpliada(matriz, vetor):
+    for i in range(len(matriz)):
+        print(f"{matriz[i]}{vetor[i]}")
+
+
+while (deveParar == ""):
+    
+    ordem = int(input("Digite a dimensao da matriz A\n"))
+    matriz = []
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            linha.append(int(input(f"Digite o valor na posisao {u+1},{v+1} \n")))
+        matriz.append(linha)
+    print("Matriz inicial A:")
+    printmatriz(matriz)
+
+    vetorResultado = []
+    for i in range(ordem):
+        vetorResultado.append(int(input(f"Digite o valor de X{i} do vetor resultado:\n")))
+    printmatriz(vetorResultado)
+
+    print("------00-----")
+    print("Matriz Ampliada:")
+    printAmpliada(matriz,vetorResultado)
+
+    incognitas = [0]*ordem
+    incognitas[0] = vetorResultado[0]/matriz[0][0]
+
+    for n in range(1,ordem):
+        somatorio = 0
+        for i in range(n):
+            somatorio += matriz[n][i] * incognitas[i]
+        incognitas[n] = (vetorResultado[n]-somatorio)/matriz[n][n]
+
+    print("Solucao:")
+    print(incognitas)
+    deveParar = input("Deseja continuar?(enter para continuar, qualquer tecla para parar)\n")
+
+print("Ate mais")
+\end{lstlisting}
+
+\end{document}

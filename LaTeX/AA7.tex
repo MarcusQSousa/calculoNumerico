@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\begin{document}
+
+\section{AA7}
+
+Escreva um programa, em linguagem Python, para ler n notas de uma disciplina, via console, armazená-los num vetor e fazer as seguintes tarefas:
+\begin{enumerate}
+    \item imprimir o vetor na ordem lida;
+    \item imprimir o vetor em ordem crescente;
+    \item imprimir a maior e a menor nota;
+    \item imprimir a nota média;
+    \item calcular e imprimir o desvio padrão;
+    \item imprimir o número de alunos que estão abaixo de um desvio padrão abaixo da média;
+    \item plotar um gráfico de dispersão unidimensional para os dados.
+    
+\end{enumerate}
+
+O programa inicia obtendo o numero n de notas do usuario.Logo apos as notas sao obtidas do usuario e armazenadas no vetor(lista). 
+\begin{lstlisting}[language=python]
+n= int(input("Digite o numero de notas:\n"))
+notas = []
+for i in range(n):
+    notas.append(int(input(f"Digite a {i+1}a nota")))
+print(f"Lista de notas: {notas}")
+\end{lstlisting}
+
+\subsection{Ordenar o vetor}
+Essa e a parte mais dificil. Para ordenar esse vetor vamos encontrar o elemento de menor valor e colocar na primeira posicao. Na proxima itracao, ignoramos a primeira posicao e procuramos o menor valor dentre os que sobraram e o colocamos proximo ao primeiro e assim por diante. 
+
+\begin{lstlisting}[language=Python]
+ ordenado = list(notas) #Criamos uma copia para
+    for i in range(n):  #nao alterar o vetor inicial
+        posicaoMenor = i
+        for j in range(i+1,n):
+            if (ordenado[j] < ordenado[posicaoMenor]):
+                posicaoMenor = j
+        aux = ordenado[i]
+        ordenado[i] = ordenado[posicaoMenor]
+        ordenado[posicaoMenor] = aux
+    print(f"Lista de notas ordenada: {ordenado}")
+\end{lstlisting}
+
+\subsection{Maior e menor nota}
+Como o vetor ja foi ordenado a maior nota sera o ultimo item da lista, e o menor sera o primeiro item, Assim nao precisaremos iterar sobre a lista para procurar.Dessa forma iremos apenas selecionar e imprimir.
+
+\begin{lstlisting}[language=Python]
+ maior = ordenado[-1]
+menor = ordenado[0]
+ print(f"Maior nota: {maior}, menor: {menor}")
+\end{lstlisting}
+
+\subsection{Media, desvio padrao e numero de notas baixas}
+O algoritmos para definir a media e o desvio padrao sao semelhantes. Um laco for precorre o vetor acumula valores em uma variavel.
+\[
+M_a = \frac{\sum x_i}{n}, \sigma = \frac{\sum(x_i-Ma)^2}{n}
+\]
+O que esta dentro do somatorio e o mesmo que esta dentro do laco for.
+\begin{lstlisting}[language=Python]
+media = 0
+for nota in notas:
+    media+=nota
+media = media/n
+print(f"Media: {media}")
+
+desvio = 0
+for nota in notas:
+    desvio += (nota - media)**2
+desvio = desvio/n
+desvio = desvio**.5
+print(f"Desvio padrao: {desvio}")   
+\end{lstlisting}
+Para obter o numero de notas baixas, percorremos o vetor de notas e toda vez que a nota for menor que $M_a - \sigma$ adicionamos 1 a variavel correspondente.
+
+\begin{lstlisting}[language=Python]
+notasBaixas = 0
+for nota in notas:
+    if(nota <= media-desvio):
+        notasBaixas+=1
+print(f"Notas menores que a media - desvio padrao:{notasBaixas}\n")
+\end{lstlisting}
+
+\subsection{Plotar grafico com valor das notas}
+Aqui a biblioteca faz quase tudo. precisamos apenas instalar a biblioteca, importar no inicio do codigo, fornecer os dados e pronto.
+
+\begin{lstlisting}[language=Python]
+import matpllotlib.pyplot as mp
+#[...
+#...]
+mp.hist(notas)
+mp.show()
+\end{lstlisting}
+\subsection{Codigo completo:}
+\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as mp
+
+print("AA-07-Marcus Sousa\n\n")
+deveParar = ""
+
+while (deveParar == ""):
+    n= int(input("Digite o numero de notas:\n"))
+    notas = []
+    for i in range(n):
+        notas.append(int(input(f"Digite a {i+1}a nota")))
+    print("\n-------00-------\n")
+    print(f"Lista de notas: {notas}")
+
+    ordenado = list(notas)
+    for i in range(n):
+        posicaoMenor = i
+        for j in range(i+1,n):
+            if (ordenado[j] < ordenado[posicaoMenor]):
+                posicaoMenor = j
+        aux = ordenado[i]
+        ordenado[i] = ordenado[posicaoMenor]
+        ordenado[posicaoMenor] = aux
+    print(f"Lista de notas ordenada: {ordenado}")
+
+    maior = ordenado[-1]
+    menor = ordenado[0]
+
+    print(f"Maior nota: {maior}, menor: {menor}")
+
+    media = 0
+    for nota in notas:
+        media+=nota
+    media = media/n
+    print(f"Media: {media}")
+
+    desvio = 0
+    for nota in notas:
+        desvio += (nota - media)**2
+    desvio = desvio/n
+    desvio = desvio**.5
+    print(f"Desvio padrao: {desvio}")   
+
+    notasBaixas = 0
+    for nota in notas:
+        if(nota <= media-desvio):
+            notasBaixas+=1
+    print(f"Notas menores que a media - desvio padrao:{notasBaixas}\n")
+    mp.hist(notas)
+    mp.show()
+
+    deveParar = input("Deseja continuar?(enter para continuar, qualquer tecla para parar)\n")
+
+print("Ate mais")
+\end{lstlisting}
+\end{document}

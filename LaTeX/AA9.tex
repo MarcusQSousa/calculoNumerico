@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1.5cm]{geometry}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.8,0,0.2}
+\definecolor{backcolour}{rgb}{.8,.8,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\begin{document}
+
+\section{AA9}
+Escreva um programa, em linguagem Python, para resolver um sistema de equações lineares triangular superior a partir das seguintes etapas:
+\begin{enumerate}
+    \item ler a dimensão n da matriz dos coeficientes no console;
+    \item registrar as entadas da matriz dos coeficientes no console;
+    \item registrar as entradas do vetor dos resultados no console;
+    \item imprimir o sistema original na forma de matriz ampliada;
+    \item resolver e imprimir a solução do sistema de equações;
+\end{enumerate}
+\subsection{}
+
+Os item 1,2 e 3 desse exercicio ja foi resolvido no AA8. Sendo assim partiremos diretamente para os item 4 e 5.Para o item 4, definiremos uma funcao no inicio do nosso codigo assim como fizmos antes.
+
+\begin{lstlisting}[language=python]
+def printAmpliada(matriz, vetor):
+    for i in range(len(matriz)):
+        print(f"{matriz[i]}{vetor[i]}")
+\end{lstlisting}
+
+\subsection{Solucao para sistema triangular superior}
+Para resolver esse tipo de sistema, obtemos primeiro a solucao do ultimo elemento e vamos substituindo os resultados de traz pra frente.
+
+\begin{lstlisting}[language=Python]
+incognitas = [0]*ordem
+    incognitas[ordem-1] = vetorResultado[ordem-1]/matriz[ordem-1][ordem-1]
+    for n in range(1,ordem):
+        somatorio = 0
+        k = ordem - n-1
+        for i in range(n):
+            j = ordem - i - 1
+            somatorio += matriz[k][j] * incognitas[j]
+        incognitas[k] = (vetorResultado[k]-somatorio)/matriz[k][k]
+
+    print(incognitas)
+\end{lstlisting}
+
+Por estarmos trabalhando de traz pra frente, o algoritmo fica mais dificil de entender. Por isso recomendo fazer primeiro o AA10, e depois voltar
+
+\subsection{Codigo completo:}
+\begin{lstlisting}[language=Python]
+deveParar = ""
+
+def printmatriz(matriz):
+    for linha in matriz:
+        print(linha)
+
+def printAmpliada(matriz, vetor):
+    for i in range(len(matriz)):
+        print(f"{matriz[i]}{vetor[i]}")
+
+
+
+while (deveParar == ""):
+    
+    ordem = int(input("Digite a dimensao da matriz A\n"))
+    matriz =[]
+    for u in range(ordem):
+        linha = []
+        for v in range(ordem):
+            linha.append(int(input(f"Digite o valor na posisao {u+1},{v+1} \n")))
+        matriz.append(linha)
+    print("Matriz inicial A:")
+    printmatriz(matriz)
+    vetorResultado = []
+    for i in range(ordem):
+        vetorResultado.append(int(input(f"Digite o valor de X{i} do vetor resultado")))
+    print(vetorResultado)
+
+
+    printmatriz(matriz)
+    printAmpliada(matriz,vetorResultado)
+
+    incognitas = [0]*ordem
+    incognitas[ordem-1] = vetorResultado[ordem-1]/matriz[ordem-1][ordem-1]
+    for n in range(1,ordem):
+        somatorio = 0
+        k = ordem - n-1
+        for i in range(n):
+            j = ordem - i - 1
+            somatorio += matriz[k][j] * incognitas[j]
+        incognitas[k] = (vetorResultado[k]-somatorio)/matriz[k][k]
+
+    print(incognitas)
+    deveParar = input("Deseja continuar?(enter para continuar, qualquer tecla para parar)\n")
+
+print("Ate mais")
+\end{lstlisting}
+
+\end{document}
